@@ -311,36 +311,7 @@
             max-width: 1600px;
             margin: 0 auto;
             padding: 2rem;
-        }
-        
-        /* ===================
-           PAGE HEADER
-        =================== */
-        .page-header {
-            margin-bottom: 1.5rem;
-        }
-        
-        .page-title {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            margin-bottom: 0.25rem;
-            letter-spacing: -0.5px;
-        }
-        
-        .page-subtitle {
-            color: var(--text-secondary);
-            font-size: 1rem;
-        }
-        
-        @media (max-width: 768px) {
-            .header-container { padding: 0 1rem; }
-            .header-center { display: none; }
-            .header-left, .header-right { min-width: auto; }
-            .app-menu { padding: 0 1rem; }
-            .tabs-container { top: 120px; overflow-x: auto; }
-            .tabs-list { justify-content: flex-start; gap: 1.5rem; }
-            .stats-grid { grid-template-columns: 1fr; }
+            padding-top: 2.5rem; 
         }
 
         /* ===================
@@ -424,16 +395,15 @@
         .module-container { display: none; animation: fadeIn 0.4s ease-out; }
         .module-container.active { display: block; }
         
-        /* VIEWS INTERNAS - CORREÇÃO IMPORTANTE */
+        /* VIEWS INTERNAS */
         .inner-view { 
-            display: none; /* Oculto por padrão */
+            display: none !important; 
             animation: fadeIn 0.3s ease-out; 
             width: 100%; 
         }
         
-        /* Importante: esta regra garante que só a view com .active apareça */
         .inner-view.active { 
-            display: block; 
+            display: block !important; 
         }
 
         .tab-pane { display: none; animation: fadeIn 0.4s ease-out; }
@@ -571,6 +541,152 @@
             display: flex;
             align-items: center;
         }
+
+        /* PRODUCTS CAROUSEL */
+        .products-section {
+            margin-top: 4rem;
+            margin-bottom: 2rem;
+        }
+        .products-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            padding-left: 0.5rem;
+        }
+        .carousel-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .carousel-track {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            scroll-behavior: smooth;
+            flex: 1;
+            padding: 1rem 0.5rem; /* Padding to show shadow */
+        }
+        .carousel-track::-webkit-scrollbar {
+            display: none;
+        }
+        .product-card {
+            min-width: 300px;
+            flex: 0 0 calc(33.333% - 1rem);
+            scroll-snap-align: start;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            height: 100%;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+        .prod-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .prod-name {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .prod-slogan {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .prod-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+        .prod-btn {
+            width: 100%;
+            justify-content: center;
+            padding: 0.75rem;
+            background: var(--bg-secondary);
+            color: var(--primary);
+            border: 1px solid transparent;
+        }
+        .prod-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+        .carousel-nav-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+            z-index: 10;
+        }
+        .carousel-nav-btn:hover {
+            background: var(--primary);
+            transform: scale(1.1);
+        }
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .indicator.active {
+            background: var(--secondary);
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 992px) {
+            .product-card {
+                flex: 0 0 calc(50% - 0.75rem);
+            }
+        }
+        @media (max-width: 768px) {
+            .product-card {
+                flex: 0 0 100%;
+            }
+            .carousel-nav-btn {
+                display: none; /* Hide arrows on mobile, rely on swipe */
+            }
+        }
     </style>
 </head>
 
@@ -614,12 +730,7 @@
 
     <!-- MAIN CONTAINER -->
     <main class="main-container">
-        <!-- PAGE HEADER -->
-        <div class="page-header">
-            <h1 class="page-title">Dashboard</h1>
-            <p class="page-subtitle">Visão geral completa do sistema ATHUS</p>
-        </div>
-
+        
         <!-- MODULO VISÃO GERAL -->
         <div id="module-overview" class="module-container active">
             
@@ -635,15 +746,19 @@
                     <div class="stat-sparkline-container"><canvas id="sparkline2"></canvas></div>
                     <div class="stat-footer"><i class="fas fa-exclamation-triangle"></i><span>8 aguardando ação</span></div>
                 </div>
-                <div class="stat-card" style="--card-accent: var(--info); --card-bg: var(--info-light); --card-color: var(--info);">
+                
+                <!-- Card 3: Assinaturas (Tornando clicável) -->
+                <div class="stat-card" onclick="showSignaturesPage()" style="cursor: pointer; --card-accent: var(--info); --card-bg: var(--info-light); --card-color: var(--info);">
                     <div class="stat-top-section"><div class="stat-icon"><i class="fas fa-file-signature"></i></div><div class="stat-info"><h3>Assinaturas Pendentes</h3><div class="stat-value">156</div></div></div>
                     <div class="stat-sparkline-container"><canvas id="sparkline3"></canvas></div>
                     <div class="stat-footer"><i class="fas fa-hourglass-half"></i><span>3 vencem em breve</span></div>
                 </div>
-                <div class="stat-card" style="--card-accent: var(--electric); --card-bg: var(--electric-light); --card-color: var(--electric);">
-                    <div class="stat-top-section"><div class="stat-icon"><i class="fas fa-exclamation-circle"></i></div><div class="stat-info"><h3>Prazos Críticos</h3><div class="stat-value">12</div></div></div>
+                
+                <!-- Card 4: Secretarias (Transformado) -->
+                <div class="stat-card" onclick="showSecretariatsOptions()" style="cursor: pointer; --card-accent: var(--electric); --card-bg: var(--electric-light); --card-color: var(--electric);">
+                    <div class="stat-top-section"><div class="stat-icon"><i class="fas fa-building"></i></div><div class="stat-info"><h3>Secretarias</h3><div class="stat-value">12</div></div></div>
                     <div class="stat-sparkline-container"><canvas id="sparkline4"></canvas></div>
-                    <div class="stat-footer"><i class="fas fa-calendar-day"></i><span>Próximo: Hoje às 16h</span></div>
+                    <div class="stat-footer"><i class="fas fa-check-circle"></i><span>Total cadastradas</span></div>
                 </div>
             </div>
 
@@ -758,6 +873,81 @@
             </div>
         </div>
 
+        <!-- SECÇÃO DE PRODUTOS (CARROSSEL - VISÍVEL APENAS NO MÓDULO DE VISÃO GERAL) -->
+        <!-- A classe module-container já gerencia a visibilidade, então basta colocar dentro de module-overview ou criar uma lógica específica. 
+             Para garantir que suma quando sai da visão geral, vou colocar DENTRO do #module-overview -->
+        <div class="products-section" id="home-products-carousel">
+            <h2 class="products-title">Conheça Nossas Soluções</h2>
+            <div class="carousel-wrapper">
+                <button class="carousel-nav-btn prev-btn" onclick="scrollCarousel(-1)"><i class="fas fa-chevron-left"></i></button>
+                <div class="carousel-track" id="productsCarousel">
+                    
+                    <!-- SIGLE (1) -->
+                    <div class="product-card" style="border-left: 4px solid var(--primary);">
+                        <div class="prod-icon" style="background: var(--primary-light); color: var(--primary);">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <h3 class="prod-name" style="color: var(--primary);">SIGLE</h3>
+                        <p class="prod-slogan">Sistema Inteligente Legislativo</p>
+                        <p class="prod-desc">Software que utiliza Inteligência Artificial para criar projetos de lei, resoluções e decretos reduzindo o tempo gasto em processos manuais.</p>
+                        <button class="btn prod-btn">Saiba Mais <i class="fas fa-arrow-right"></i></button>
+                    </div>
+
+                    <!-- SIGLI (2) -->
+                    <div class="product-card" style="border-left: 4px solid var(--secondary);">
+                        <div class="prod-icon" style="background: #E0E7F5; color: var(--secondary);">
+                            <i class="fas fa-file-signature"></i>
+                        </div>
+                        <h3 class="prod-name" style="color: var(--secondary);">SIGLI</h3>
+                        <p class="prod-slogan">Sistema Inteligente de Licitações</p>
+                        <p class="prod-desc">Automatiza todas as etapas do processo licitatório com IA, desde o planejamento até a homologação. Gera DFD, Mapa de Riscos, ETP e Editais.</p>
+                        <button class="btn prod-btn">Saiba Mais <i class="fas fa-arrow-right"></i></button>
+                    </div>
+
+                    <!-- CONTRIX (3) -->
+                    <div class="product-card" style="border-left: 4px solid var(--info);">
+                        <div class="prod-icon" style="background: var(--info-light); color: var(--info);">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h3 class="prod-name" style="color: var(--info);">CONTRIX</h3>
+                        <p class="prod-slogan">Gestão e Controle Interno</p>
+                        <p class="prod-desc">Acompanha em tempo real com IA todos os documentos e processos. Relatórios detalhados, monitoramento de prazos e controle estratégico.</p>
+                        <button class="btn prod-btn">Saiba Mais <i class="fas fa-arrow-right"></i></button>
+                    </div>
+
+                    <!-- LAWER (4) -->
+                    <div class="product-card" style="border-left: 4px solid var(--electric);">
+                        <div class="prod-icon" style="background: var(--electric-light); color: var(--electric);">
+                            <i class="fas fa-gavel"></i>
+                        </div>
+                        <h3 class="prod-name" style="color: var(--electric);">LAWER</h3>
+                        <p class="prod-slogan">Gestão Inteligente de Contratos</p>
+                        <p class="prod-desc">Criação de contratos públicos alinhados às legislações vigentes com IA. Alertas automáticos de prazos e vencimentos via WhatsApp e SMS.</p>
+                        <button class="btn prod-btn">Saiba Mais <i class="fas fa-arrow-right"></i></button>
+                    </div>
+
+                    <!-- GOVTRACK (5) -->
+                    <div class="product-card" style="border-left: 4px solid var(--warning);">
+                        <div class="prod-icon" style="background: var(--warning-light); color: var(--warning);">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="prod-name" style="color: var(--warning);">GOVTRACK</h3>
+                        <p class="prod-slogan">Rastreamento Veicular e IoT</p>
+                        <p class="prod-desc">Servidor robusto de rastreamento veicular com GPS e IoT. Monitoramento em tempo real, análise de trajetórias e alertas personalizados.</p>
+                        <button class="btn prod-btn">Saiba Mais <i class="fas fa-arrow-right"></i></button>
+                    </div>
+
+                </div>
+                <button class="carousel-nav-btn next-btn" onclick="scrollCarousel(1)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="carousel-indicators">
+                <!-- APENAS 3 BOLINHAS CONFORME SOLICITADO -->
+                <div class="indicator active" onclick="scrollToCard(0)"></div>
+                <div class="indicator" onclick="scrollToCard(1)"></div>
+                <div class="indicator" onclick="scrollToCard(2)"></div>
+            </div>
+        </div>
+
         <!-- MÓDULO DE OPÇÕES DE DOCUMENTOS (NOVA TELA) -->
         <div id="module-document-options" class="module-container">
             <div class="back-btn-container">
@@ -853,11 +1043,70 @@
                 </div>
             </div>
         </div>
-        
-        <!-- OUTROS MÓDULOS (Placeholders) -->
-        <div id="module-signatures" class="module-container"><div class="card card-full"><div class="empty-state"><h3>Módulo de Assinaturas</h3><p>Conteúdo específico de assinaturas.</p></div></div></div>
-        <div id="module-processes" class="module-container"><div class="card card-full"><div class="empty-state"><h3>Módulo de Processos</h3><p>Conteúdo específico de processos.</p></div></div></div>
-        <div id="module-secretariats" class="module-container"><div class="card card-full"><div class="empty-state"><h3>Módulo de Secretarias</h3><p>Conteúdo específico de secretarias.</p></div></div></div>
+
+        <!-- NOVO MÓDULO DE ASSINATURAS -->
+        <div id="module-signatures-page" class="module-container">
+            <div class="back-btn-container">
+                <button class="btn btn-secondary" onclick="showDashboard()"><i class="fas fa-arrow-left"></i> Voltar ao Dashboard</button>
+            </div>
+            
+            <div class="doc-options-grid">
+                 <div class="doc-option-card">
+                    <div class="doc-option-icon" style="background: var(--primary-light); color: var(--primary);"><i class="fas fa-file-signature"></i></div>
+                    <div class="doc-option-title">Nova Assinatura</div>
+                </div>
+                 <div class="doc-option-card">
+                    <div class="doc-option-icon" style="background: #FFFBEB; color: #F59E0B;"><i class="fas fa-clock"></i></div>
+                    <div class="doc-option-title">Assinaturas Pendentes</div>
+                </div>
+                 <div class="doc-option-card">
+                    <div class="doc-option-icon" style="background: #ECFDF5; color: #10B981;"><i class="fas fa-check-double"></i></div>
+                    <div class="doc-option-title">Assinaturas Concluídas</div>
+                </div>
+                 <div class="doc-option-card">
+                    <div class="doc-option-icon" style="background: #FEF2F2; color: #EF4444;"><i class="fas fa-ban"></i></div>
+                    <div class="doc-option-title">Assinaturas Canceladas</div>
+                </div>
+                 <div class="doc-option-card">
+                    <div class="doc-option-icon" style="background: #E0F2FE; color: #0EA5E9;"><i class="fas fa-history"></i></div>
+                    <div class="doc-option-title">Histórico</div>
+                </div>
+                 <div class="doc-option-card">
+                    <div class="doc-option-icon" style="background: #F3F4F6; color: #4B5563;"><i class="fas fa-search"></i></div>
+                    <div class="doc-option-title">Busca de Assinaturas</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOVO MÓDULO DE SECRETARIAS -->
+        <div id="module-secretariat-options" class="module-container">
+            <div class="back-btn-container">
+                <button class="btn btn-secondary" onclick="showDashboard()"><i class="fas fa-arrow-left"></i> Voltar ao Dashboard</button>
+            </div>
+            <div class="doc-options-grid">
+                <div class="doc-option-card">
+                    <div class="doc-option-icon" style="background: var(--primary-light); color: var(--primary);"><i class="fas fa-building"></i></div>
+                    <div class="doc-option-title">Cadastrar Secretaria</div>
+                </div>
+                <div class="doc-option-card">
+                    <div class="doc-option-icon" style="background: #E0F2FE; color: #0EA5E9;"><i class="fas fa-search"></i></div>
+                    <div class="doc-option-title">Consultar Secretarias</div>
+                </div>
+                <div class="doc-option-card">
+                    <div class="doc-option-icon" style="background: #ECFDF5; color: #10B981;"><i class="fas fa-sitemap"></i></div>
+                    <div class="doc-option-title">Organograma</div>
+                </div>
+                <div class="doc-option-card">
+                    <div class="doc-option-icon" style="background: #FFFBEB; color: #F59E0B;"><i class="fas fa-users"></i></div>
+                    <div class="doc-option-title">Servidores por Secretaria</div>
+                </div>
+                <div class="doc-option-card">
+                    <div class="doc-option-icon" style="background: #F3F4F6; color: #4B5563;"><i class="fas fa-chart-bar"></i></div>
+                    <div class="doc-option-title">Relatórios de Gestão</div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <script>
@@ -866,52 +1115,64 @@
             document.querySelectorAll('.module-container').forEach(el => el.classList.remove('active'));
             document.getElementById('module-' + moduleName).classList.add('active');
             
-            if(moduleName === 'overview') { setTimeout(() => { updateChartTheme(); }, 100); }
+            if(moduleName === 'overview') { 
+                // Garante que o carrossel aparece
+                const carousel = document.getElementById('home-products-carousel');
+                if(carousel) carousel.style.display = 'block';
+
+                setTimeout(() => { updateChartTheme(); }, 100); 
+                // Reativa a aba padrão se necessário
+                const activeSubTab = document.querySelector('.sub-tab-btn.active');
+                if (activeSubTab) {
+                    activeSubTab.click();
+                } else {
+                    switchView('docs');
+                }
+            } else {
+                // ESCONDE O CARROSSEL SE SAIR DA VISÃO GERAL
+                const carousel = document.getElementById('home-products-carousel');
+                if(carousel) carousel.style.display = 'none';
+            }
         }
 
-        // Nova função para mostrar opções de documentos
+        // Função para mostrar opções de documentos
         function showDocumentOptions() {
-            document.querySelectorAll('.module-container').forEach(el => el.classList.remove('active'));
-            document.getElementById('module-document-options').classList.add('active');
+            switchModule('document-options');
         }
         
-        // Nova função para mostrar opções de processos
+        // Função para mostrar opções de processos
         function showProcessOptions() {
-            document.querySelectorAll('.module-container').forEach(el => el.classList.remove('active'));
-            document.getElementById('module-process-options').classList.add('active');
+            switchModule('process-options');
+        }
+        
+        // Função para mostrar opções de assinaturas
+        function showSignaturesPage() {
+            switchModule('signatures-page');
         }
 
-        // Nova função para voltar ao dashboard principal
+        // Função para mostrar opções de secretarias
+        function showSecretariatsOptions() {
+            switchModule('secretariat-options');
+        }
+
+        // Função para voltar ao dashboard principal
         function showDashboard() {
             switchModule('overview');
         }
 
         function switchView(viewName) {
-            // 1. Esconde TODAS as views internas removendo a classe 'active'
             const allViews = document.querySelectorAll('.inner-view');
-            allViews.forEach(view => {
-                view.classList.remove('active');
-            });
+            allViews.forEach(view => { view.classList.remove('active'); });
             
-            // 2. Remove a classe 'active' de todos os botões de sub-aba
             const allButtons = document.querySelectorAll('.sub-tab-btn');
-            allButtons.forEach(btn => {
-                btn.classList.remove('active');
-            });
+            allButtons.forEach(btn => { btn.classList.remove('active'); });
             
-            // 3. Mostra APENAS a view selecionada adicionando a classe 'active'
             const selectedView = document.getElementById('view-' + viewName);
-            if(selectedView) {
-                selectedView.classList.add('active');
-            }
+            if(selectedView) { selectedView.classList.add('active'); }
             
-            // 4. Ativa visualmente o botão clicado
             const clickedBtn = Array.from(document.querySelectorAll('.sub-tab-btn')).find(btn => btn.getAttribute('onclick').includes(viewName));
-            if(clickedBtn) {
-                clickedBtn.classList.add('active');
-            }
+            if(clickedBtn) { clickedBtn.classList.add('active'); }
             
-            // 5. Atualiza o botão de ação principal conforme a view (UX extra)
             const mainBtn = document.getElementById('mainActionBtn');
             if(mainBtn) {
                 if(viewName === 'docs') mainBtn.innerHTML = '<i class="fas fa-plus"></i> Novo Documento';
@@ -924,11 +1185,25 @@
         function toggleTheme() {
             const html = document.documentElement; const currentTheme = html.getAttribute('data-theme');
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            const icon = document.getElementById('theme-icon'); html.setAttribute('data-theme', newTheme);
-            icon.className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-            localStorage.setItem('theme', newTheme); updateChartTheme();
+            const icon = document.getElementById('theme-icon');
+            
+            html.setAttribute('data-theme', newTheme);
+            
+            if (icon) {
+                icon.className = newTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+            }
+            
+            localStorage.setItem('theme', newTheme);
+            updateChartTheme();
         }
-        const savedTheme = localStorage.getItem('theme') || 'light'; document.documentElement.setAttribute('data-theme', savedTheme); document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const themeIcon = document.getElementById('theme-icon');
+        if (themeIcon) {
+            themeIcon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
         function getChartColors() {
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
             return { primary: '#2A65D0', secondary: '#0F2A6D', accent: '#B0B6BF', electric: '#3BB4F2', text: isDark ? '#F4F9FF' : '#0F2A6D', grid: isDark ? '#2A2F3A' : '#E0E7F5' };
@@ -944,7 +1219,6 @@
         createSparkline('sparkline3', [180, 170, 165, 160, 158, 155, 156], 'accent');
         createSparkline('sparkline4', [5, 8, 12, 10, 15, 10, 12], 'electric');
 
-        // Gráfico Principal (Activity)
         const weeklyData = {
             labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
             documentos: { label: 'Documentos Criados', data: [12, 15, 22, 18, 9, 0, 0], colorKey: 'primary' },
@@ -966,9 +1240,7 @@
             activityChart = new Chart(ctx, { type: 'line', data: { labels: weeklyData.labels, datasets: [{ label: datasetInfo.label, data: datasetInfo.data, borderColor: color, backgroundColor: color + '20', tension: 0.4, fill: true, pointBackgroundColor: '#fff', pointBorderColor: color, pointBorderWidth: 2, pointRadius: 4, pointHoverRadius: 6 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { backgroundColor: colors.secondary, titleColor: '#fff', bodyColor: '#fff', padding: 10, cornerRadius: 8, displayColors: false } }, scales: { y: { beginAtZero: true, grid: { color: colors.grid, borderDash: [5, 5] }, ticks: { color: colors.text } }, x: { grid: { display: false }, ticks: { color: colors.text } } } } });
         }
 
-        // Gráfico de Rosca (Process Chart)
-        let processChart = null;
-        const processChartEl = document.getElementById('processChart');
+        let processChart = null; const processChartEl = document.getElementById('processChart');
         if (processChartEl) {
             const processCtx = processChartEl.getContext('2d');
             processChart = new Chart(processCtx, { type: 'doughnut', data: { labels: ['Em Andamento', 'Concluídos', 'Pendentes'], datasets: [{ data: [156, 432, 23], backgroundColor: ['#B0B6BF', '#2A65D0', '#0F2A6D'], borderWidth: 0, hoverOffset: 4 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, pointStyle: 'circle', color: getChartColors().text, padding: 20, font: { size: 12, family: "'Inter', sans-serif" } } } } } });
@@ -986,6 +1258,95 @@
 
         initActivityChart();
         updateActivityChart('documentos');
+
+        // CAROUSEL LOGIC
+        const carouselTrack = document.getElementById('productsCarousel');
+        const indicators = document.querySelectorAll('.indicator');
+        const totalCards = 5;
+        let currentIndex = 0;
+
+        function getVisibleCardsCount() {
+            if (window.innerWidth >= 992) return 3; 
+            if (window.innerWidth >= 768) return 2; 
+            return 1; 
+        }
+
+        function getCardWidth() {
+            const card = document.querySelector('.product-card');
+            if (!card) return 320;
+            const style = window.getComputedStyle(carouselTrack);
+            const gap = parseFloat(style.gap) || 24;
+            return card.offsetWidth + gap;
+        }
+
+        function getMaxIndex() {
+            return totalCards - getVisibleCardsCount();
+        }
+
+        function updateCarouselPosition() {
+            const cardWidth = getCardWidth();
+            carouselTrack.scrollTo({
+                left: currentIndex * cardWidth,
+                behavior: 'smooth'
+            });
+            updateIndicators();
+        }
+
+        function scrollCarousel(direction) {
+            const maxIndex = getMaxIndex();
+            currentIndex += direction;
+
+            if (currentIndex < 0) {
+                currentIndex = maxIndex;
+            } else if (currentIndex > maxIndex) {
+                currentIndex = 0;
+            }
+            updateCarouselPosition();
+        }
+
+        function scrollToCard(index) {
+            currentIndex = index;
+            updateCarouselPosition();
+        }
+
+        function updateIndicators() {
+            let activeDot = currentIndex;
+            if (getVisibleCardsCount() === 1) { 
+               activeDot = Math.floor(currentIndex / 2);
+               if (activeDot > 2) activeDot = 2;
+            }
+            indicators.forEach((dot, i) => {
+                if (i === activeDot) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        let isScrolling;
+        if (carouselTrack) {
+            carouselTrack.addEventListener('scroll', () => {
+                window.clearTimeout(isScrolling);
+                isScrolling = setTimeout(() => {
+                    const cardWidth = getCardWidth();
+                    const scrollLeft = carouselTrack.scrollLeft;
+                    let newIndex = Math.round(scrollLeft / cardWidth);
+                    const maxIndex = getMaxIndex();
+                    if (newIndex < 0) newIndex = 0;
+                    if (newIndex > maxIndex) newIndex = maxIndex;
+
+                    if (currentIndex !== newIndex) {
+                        currentIndex = newIndex;
+                        updateIndicators();
+                    }
+                }, 66);
+            });
+            updateIndicators();
+            window.addEventListener('resize', () => {
+                updateCarouselPosition();
+            });
+        }
     </script>
 </body>
 </html>
